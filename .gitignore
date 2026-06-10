@@ -35,8 +35,6 @@ Thumbs.db
 # ==================================================
 models/*.pth
 models/*.pt
-models/*.pkl
-models/*.joblib
 
 # Keep directory structure
 !models/.gitkeep
@@ -56,11 +54,16 @@ data/outputs/*
 # ==================================================
 # Experiment Artifacts
 # ==================================================
-artifacts/*
-!artifacts/.gitkeep
+artifacts/**
+artifacts/features/
 
-!artifacts/*.csv
-!artifacts/*.png
+# Allow artifact folders
+!artifacts/
+!artifacts/**/
+
+# Allow reportable outputs
+!artifacts/**/*.csv
+!artifacts/**/*.png
 !artifacts/.gitkeep
 
 # ==================================================

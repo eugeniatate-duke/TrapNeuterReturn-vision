@@ -1,12 +1,8 @@
 import pandas as pd
-
 import streamlit as st
-
 from PIL import Image
-
-from predictor import Predictor
-
-from recommendations import (
+from app.predictor import Predictor
+from app.recommendations import (
     get_recommendation,
 )
 
@@ -75,7 +71,7 @@ if uploaded_file:
     )
 
     st.subheader("Recommended Action")
-    
+
     recommendation = (
         get_recommendation(
             result["animal"],

@@ -165,7 +165,13 @@ Coming soon.
 
 ## Deployment
 
-Coming soon.
+TNRVision is deployed as a Hugging Face Space using Streamlit.
+
+The application performs inference using the trained MobileNetV3 model and provides:
+- Animal classification
+- Confidence scores
+- TNR-specific recommendations
+- Human-review alerts for low-confidence predictions
 
 ---
 

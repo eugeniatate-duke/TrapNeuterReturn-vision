@@ -59,6 +59,10 @@ data/outputs/*
 artifacts/*
 !artifacts/.gitkeep
 
+!artifacts/*.csv
+!artifacts/*.png
+!artifacts/.gitkeep
+
 # ==================================================
 # Hugging Face / Gradio
 # ==================================================

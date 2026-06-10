@@ -1,3 +1,4 @@
 model,accuracy,macro_f1
 baseline,0.314,0.119
 hog_svm,0.511,0.494
+mobilenet_v3,0.880,

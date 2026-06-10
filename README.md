@@ -105,6 +105,56 @@ data/raw/
 
 Dataset acquisition and preprocessing scripts will be provided in the `scripts/` directory.
 
+--- 
+
+## Dataset
+
+TNRVision uses a custom multi-class image dataset representing species commonly encountered during Trap-Neuter-Return (TNR) operations.
+
+Classes:
+
+| Class | Images |
+|---------|---------:|
+| Cat | 501 |
+| Dog | 501 |
+| Raccoon | 260 |
+| Opossum | 330 |
+
+Total Images: 1,592
+
+The dataset was curated from multiple publicly available image sources and organized into a unified classification dataset for model development and evaluation.
+
+https://www.kaggle.com/datasets/shaunthesheep/microsoft-catsvsdogs-dataset
+https://www.kaggle.com/datasets/asaniczka/mammals-image-classification-dataset-45-animals?select=mammals
+https://www.kaggle.com/datasets/debasisdotcom/racoon-detection 
+
+--- 
+## Dataset Preparation
+
+Expected raw data structure:
+
+data/raw/
+├── cat/
+├── dog/
+├── raccoon/
+└── opossum/
+
+Generate train/validation/test splits:
+
+```bash
+python scripts/create_dataset.py
+```
+
+The script creates: 
+
+```bash
+data/processed/
+├── train/
+├── val/
+└── test/
+```
+
+using a 70/15/15 split.
 ---
 
 ## Setup

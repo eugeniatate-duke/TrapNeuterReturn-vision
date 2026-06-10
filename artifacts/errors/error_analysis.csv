@@ -1,0 +1,6 @@
+image,actual,predicted
+error_1.jpg,cat,opossum
+error_2.jpg,cat,raccoon
+error_3.jpg,dog,cat
+error_4.jpg,dog,cat
+error_5.jpg,dog,cat

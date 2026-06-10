@@ -59,10 +59,14 @@ def main():
     print("\nTraining Counts")
     print(counts)
 
-    majority_class = max(
-        counts,
-        key=counts.get,
-    )
+    # majority_class = max(
+    #     counts,
+    #     key=counts.get,
+    # )
+    majority_class = sorted(
+        counts.items(),
+        key=lambda x: (-x[1], x[0])
+    )[0][0]
 
     print(
         f"\nMajority Class: {majority_class}"
@@ -91,6 +95,33 @@ def main():
             y_pred,
             zero_division=0,
         )
+    )
+
+    report = classification_report(
+        y_true,
+        y_pred,
+        output_dict=True,
+        zero_division=0,
+    )
+
+    metrics_df = pd.DataFrame({
+        "metric": [
+            "accuracy",
+            "macro_f1",
+            "weighted_f1"
+
+        ],
+
+        "value": [
+            accuracy,
+            report["macro avg"]["f1-score"],
+            report["weighted avg"]["f1-score"]
+        ]
+    })
+
+    metrics_df.to_csv(
+        "artifacts/baseline_metrics.csv",
+        index=False,
     )
 
     cm = confusion_matrix(

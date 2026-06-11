@@ -1,6 +1,8 @@
 import pandas as pd
 import streamlit as st
+
 from PIL import Image
+
 from app.predictor import Predictor
 from app.recommendations import (
     get_recommendation,
@@ -16,46 +18,43 @@ NON_TARGET_SPECIES = [
     "opossum"
 ]
 
-with st.expander(
-    "About TNRVision"
-):
 
-    st.write(
-        """
-        TNRVision is an AI-assisted trap
-        monitoring system designed to
-        support Trap-Neuter-Return
-        programs.
+def run_app():
 
-        The system identifies common
-        target and non-target species
-        encountered during trap
-        monitoring and provides
-        operational recommendations.
-        """
+    predictor = Predictor()
+
+    st.title("🐾 TNRVision")
+
+    st.subheader(
+        "AI-Assisted Trap Monitoring"
     )
 
-st.set_page_config(
-    page_title="TNRVision",
-    layout="wide",
-)
+    with st.expander(
+        "About TNRVision"
+    ):
 
-predictor = Predictor()
+        st.write(
+            """
+            TNRVision is an AI-assisted trap
+            monitoring system designed to
+            support Trap-Neuter-Return
+            programs.
 
-st.title(
-    "🐾 TNRVision"
-)
+            The system identifies common
+            target and non-target species
+            encountered during trap
+            monitoring and provides
+            operational recommendations.
+            """
+        )
 
-st.subheader(
-    "AI-Assisted Trap Monitoring"
-)
+    uploaded_file = st.file_uploader(
+        "Upload trap camera image",
+        type=["jpg", "jpeg", "png"],
+    )
 
-uploaded_file = st.file_uploader(
-    "Upload trap camera image",
-    type=["jpg", "jpeg", "png"],
-)
-
-if uploaded_file:
+    if not uploaded_file:
+        return
 
     image = Image.open(
         uploaded_file
@@ -70,8 +69,6 @@ if uploaded_file:
         image
     )
 
-    st.subheader("Recommended Action")
-
     recommendation = (
         get_recommendation(
             result["animal"],
@@ -79,12 +76,18 @@ if uploaded_file:
         )
     )
 
+    st.subheader(
+        "Recommended Action"
+    )
+
     if result["animal"] in TARGET_SPECIES:
+
         st.success(
             "🎯 Target Species Detected"
         )
 
     else:
+
         st.warning(
             "⚠️ Non-Target Species Detected"
         )
@@ -105,41 +108,54 @@ if uploaded_file:
             f"{result['confidence']:.1%}",
         )
 
-    # st.success(
-    #     recommendation
-    # )
+    if result["confidence"] >= 0.90:
 
-    if result["confidence"] < 0.70:
-        st.error("🔍 Human Review Required")
-        st.write(recommendation)
+        confidence_level = "High"
+
+    elif result["confidence"] >= 0.70:
+
+        confidence_level = "Moderate"
 
     else:
-        st.success(recommendation)
+
+        confidence_level = "Low"
+
+    st.info(
+        f"Confidence Level: {confidence_level}"
+    )
+
+    if result["confidence"] < 0.70:
+
+        st.error(
+            "🔍 Human Review Required"
+        )
+
+        st.write(
+            recommendation
+        )
+
+    else:
+
+        st.success(
+            recommendation
+        )
 
     probs = pd.DataFrame(
         {
             "Animal":
-                result[
-                    "probabilities"
-                ].keys(),
+                result["probabilities"].keys(),
+
             "Probability":
-                result[
-                    "probabilities"
-                ].values(),
+                result["probabilities"].values(),
         }
     )
 
-    st.subheader("Prediction Probabilities")
+    st.subheader(
+        "Prediction Probabilities"
+    )
 
-    st.bar_chart(probs.set_index("Animal"))
-
-    if result["confidence"] >= 0.90:
-        confidence_level = "High"
-
-    elif result["confidence"] >= 0.70:
-        confidence_level = "Moderate"
-
-    else:
-        confidence_level = "Low"
-
-    st.info(f"Confidence Level: {confidence_level}")
+    st.bar_chart(
+        probs.set_index(
+            "Animal"
+        )
+    )

@@ -187,15 +187,10 @@ python scripts/train_deep.py
 ---
 ## Results
 ```bash
-
 | Model | Accuracy |
-
 |---------|---------:|
-
 | Majority-Class Baseline | 31.4% |
-
 | HOG + SVM | 51.1% |
-
 | MobileNetV3 | 88.0% |
 ```
 

@@ -132,11 +132,13 @@ https://www.kaggle.com/datasets/debasisdotcom/racoon-detection
 
 Expected raw data structure:
 
+```bash
 data/raw/
 ├── cat/
 ├── dog/
 ├── raccoon/
 └── opossum/
+```
 
 Generate train/validation/test splits:
 
@@ -154,6 +156,7 @@ data/processed/
 ```
 
 using a 70/15/15 split.
+
 ---
 
 ## Setup
@@ -183,6 +186,7 @@ python scripts/train_deep.py
 
 ---
 ## Results
+```bash
 
 | Model | Accuracy |
 
@@ -193,6 +197,7 @@ python scripts/train_deep.py
 | HOG + SVM | 51.1% |
 
 | MobileNetV3 | 88.0% |
+```
 
 The MobileNetV3 transfer learning model achieved the strongest performance and was selected as the deployment model for the TNRVision application.
 

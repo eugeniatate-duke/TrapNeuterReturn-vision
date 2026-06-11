@@ -1,61 +1,68 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-def create_plot(
-    csv_path,
-    output_path,
-    title
-):
+CLASS_NAMES = [
+    "Cat",
+    "Dog",
+    "Opossum",
+    "Raccoon"
+]
 
-    df = pd.read_csv(
-        csv_path,
-        index_col=0
-    )
-
-    plt.figure(figsize=(6,5))
-
-    plt.imshow(df)
-
-    plt.title(title)
-
-    plt.xticks(
-        range(len(df.columns)),
-        df.columns,
-        rotation=45
-    )
-
-    plt.yticks(
-        range(len(df.index)),
-        df.index
-    )
-
-    for i in range(len(df.index)):
-        for j in range(len(df.columns)):
-            plt.text(
-                j,
-                i,
-                str(df.iloc[i,j]),
-                ha="center",
-                va="center"
-            )
-
-    plt.colorbar()
-
-    plt.tight_layout()
-
-    plt.savefig(output_path)
-
-    plt.close()
-
-
-create_plot(
-    "artifacts/classical/confusion_matrix.csv",
-    "artifacts/classical/confusion_matrix.png",
-    "HOG + SVM Confusion Matrix"
+df = pd.read_csv(
+    "artifacts/deep/confusion_matrix.csv",
+    header=None
 )
 
-create_plot(
-    "artifacts/deep/confusion_matrix.csv",
-    "artifacts/deep/confusion_matrix.png",
+plt.figure(figsize=(7,6))
+
+plt.imshow(
+    df,
+    interpolation="nearest"
+)
+
+plt.title(
     "MobileNetV3 Confusion Matrix"
 )
+
+plt.colorbar()
+
+plt.xticks(
+    range(len(CLASS_NAMES)),
+    CLASS_NAMES,
+    rotation=45
+)
+
+plt.yticks(
+    range(len(CLASS_NAMES)),
+    CLASS_NAMES
+)
+
+plt.xlabel(
+    "Predicted Class"
+)
+
+plt.ylabel(
+    "Actual Class"
+)
+
+for i in range(df.shape[0]):
+    for j in range(df.shape[1]):
+
+        plt.text(
+            j,
+            i,
+            str(df.iloc[i,j]),
+            ha="center",
+            va="center",
+            color="black"
+        )
+
+plt.tight_layout()
+
+plt.savefig(
+    "artifacts/deep/confusion_matrix_labeled.png",
+    dpi=300,
+    bbox_inches="tight"
+)
+
+plt.close()

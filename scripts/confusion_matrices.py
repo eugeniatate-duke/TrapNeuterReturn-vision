@@ -1,22 +1,21 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-CLASS_NAMES = [
-    "Cat",
-    "Dog",
-    "Opossum",
-    "Raccoon"
-]
 
 df = pd.read_csv(
     "artifacts/deep/confusion_matrix.csv",
-    header=None
+    index_col=0
 )
+
+CLASS_NAMES = [
+    label.title()
+    for label in df.columns
+]
 
 plt.figure(figsize=(7,6))
 
 plt.imshow(
-    df,
+    df.values,
     interpolation="nearest"
 )
 
@@ -51,13 +50,17 @@ for i in range(df.shape[0]):
         plt.text(
             j,
             i,
-            str(df.iloc[i,j]),
+            str(df.values[i,j]),
             ha="center",
             va="center",
             color="black"
         )
 
 plt.tight_layout()
+
+print(df)
+
+print(df.shape)
 
 plt.savefig(
     "artifacts/deep/confusion_matrix_labeled.png",

@@ -193,9 +193,20 @@ def main():
         y_pred,
     )
 
-    pd.DataFrame(cm).to_csv(
-        ARTIFACT_DIR / "confusion_matrix.csv",
-        index=False,
+    CLASS_NAMES = [
+        "cat",
+        "dog",
+        "raccoon",
+        "opossum"
+    ]
+
+    pd.DataFrame(
+        cm,
+        index=CLASS_NAMES,
+        columns=CLASS_NAMES,
+    ).to_csv(
+        ARTIFACT_DIR /
+        "confusion_matrix.csv"
     )
 
 

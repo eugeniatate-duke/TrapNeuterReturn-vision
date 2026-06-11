@@ -71,21 +71,20 @@ Histogram of Oriented Gradients (HOG) feature extraction combined with a traditi
 
 ### Deep Learning
 
-Transfer learning using a pretrained convolutional neural network (CNN).
+Transfer learning using MobileNetV3 with ImageNet-pretrained weights. The final model achieved 88.0% accuracy on the held-out test set.
 
 ---
+## Robustness Experiment
 
-## Planned Experiment
+The final MobileNetV3 model was evaluated under realistic trap-monitoring conditions.
 
-### Robustness Under Real-World Trap Conditions
+| Condition | Accuracy |
+|------------|-----------:|
+| Original | 88.0% |
+| Reduced Brightness | 87.2% |
+| Blurred Images | 64.5% |
 
-The project will evaluate model performance under simulated deployment conditions including:
-
-- Reduced brightness
-- Motion blur
-- Image blur
-
-The objective is to assess how well different approaches generalize to realistic nighttime monitoring scenarios.
+Results indicate that the model is highly robust to low-light conditions but significantly affected by image blur, suggesting that motion blur is a more important deployment consideration than darkness.
 
 ---
 
@@ -159,9 +158,45 @@ using a 70/15/15 split.
 
 ## Setup
 
-Coming soon.
+Create and activate a virtual environment:
+
+```bash
+
+python -m venv .venv
+
+source .venv/bin/activate
+```
+Install dependencies: 
+```bash
+pip install -r requirements.txt
+```
+Generate train/validation/test splits:
+```bash
+python scripts/create_dataset.py
+```
+Train models:
+```bash:
+python scripts/train_baseline.py
+python scripts/train_classical.py
+python scripts/train_deep.py
+```
 
 ---
+## Results
+
+| Model | Accuracy |
+
+|---------|---------:|
+
+| Majority-Class Baseline | 31.4% |
+
+| HOG + SVM | 51.1% |
+
+| MobileNetV3 | 88.0% |
+
+The MobileNetV3 transfer learning model achieved the strongest performance and was selected as the deployment model for the TNRVision application.
+
+--- 
 
 ## Deployment
 
@@ -174,6 +209,23 @@ The application performs inference using the trained MobileNetV3 model and provi
 - Human-review alerts for low-confidence predictions
 
 ---
+
+## Live Demo
+
+Hugging Face Space: https://huggingface.co/spaces/Eugenia-Tate-Duke/tnrvision
+
+### Key Features
+
+- Four-class animal classification
+
+- AI-assisted recommendation engine
+
+- Human-review workflow for low-confidence predictions
+
+- Robustness evaluation under realistic monitoring conditions
+
+- Publicly deployed Streamlit application
+--- 
 
 ## License
 

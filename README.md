@@ -186,13 +186,14 @@ python scripts/train_deep.py
 
 ---
 ## Results
-```bash
+
 | Model | Accuracy |
 |---------|---------:|
 | Majority-Class Baseline | 31.4% |
 | HOG + SVM | 51.1% |
 | MobileNetV3 | 88.0% |
-```
+
+
 
 The MobileNetV3 transfer learning model achieved the strongest performance and was selected as the deployment model for the TNRVision application.
 
